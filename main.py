@@ -9,6 +9,8 @@ import os,shutil
 import datetime
 import filecmp
 import exifread
+import configparser
+
 
 def mkdir(path):
     """创建文件夹"""
@@ -75,7 +77,7 @@ def findAllFile(base):
 
         for filename in filelist:
             filenameEnd = os.path.splitext(filename)[-1]
-            if filenameEnd == '.jpg' or filenameEnd=='.png' or filenameEnd=='.gif':
+            if filenameEnd == '.jpg' or filenameEnd=='.png' or filenameEnd=='.gif' or filenameEnd=='.JPG' or filenameEnd=='.jpeg':
                 #print(os.path.join(path, filename))
                 list.append(os.path.join(path, filename))
 
@@ -105,12 +107,25 @@ def getFileDate(src_path):
      
 if __name__ == '__main__':
 
+    config = configparser.ConfigParser()  # 类实例化
+
+    # 定义文件路径
+    path = 'config.ini'
+
+    config.read(path, encoding="utf-8")  # python3
+
+    base_path = config.get('db', 'base_path')
+    target_path = config.get('db', 'target_path')
+
+    print("需要整理的文件目录:%s" %base_path)
+    print("归档目录:%s" %target_path)
+
 
     #需要整理的文件目录
-    base_path = "V:\\备份文件\\手机文件备份\\"
+    #base_path = "V:\\备份文件\\手机文件备份\\"
 
     #归档目录
-    target_path = "Y:\\图片资源\\图片\\手机照片\\相册\\"
+    #target_path = "Y:\\图片资源\\图片\\手机照片\\相册\\"
 
     time_start = time.time()
 
@@ -118,11 +133,12 @@ if __name__ == '__main__':
 
     dt = time.strftime('%Y%m%d%H%M%S',time.localtime(time.time()))
 
-    fo = open("log-"+dt+".txt","w",encoding="utf-8")
+    fo = open("log\\log-"+dt+".txt","w",encoding="utf-8")
 
     fo.write("================================================================" + '\n')
 
     fo.write("当前搜索到文件数量:%s \n" % len(allFiles))
+    print("当前搜索到文件数量:%s \n" % len(allFiles))
 
     fo.write("================================================================" + '\n')
 
@@ -135,15 +151,10 @@ if __name__ == '__main__':
 
     time_end = time.time()
     fo.write("已经处理文件:%s \n" % len(allFiles))
+    print("已经处理文件:%s \n" % len(allFiles))
     fo.write("耗时: %.03f seconds \n" % (time_end-time_start))
+    print("耗时: %.03f seconds \n" % (time_end-time_start))
 
     fo.write("================================================================" + '\n')
 
     fo.close()
-
-
-    # fileName = "个人数据仓库搭建.docx"
-    # src_path = base_path + fileName
-    # moveToNewFilePath(src_path,fileName)
-    #print(filecmp.cmp(base_path+"1.jpg", base_path+"1234.jpg"))
-    #print(filecmp.cmp(base_path + "123.jpg", base_path + "1.jpg"))
