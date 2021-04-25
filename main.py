@@ -33,11 +33,11 @@ def mkdir(path):
         # 创建目录操作函数
         os.makedirs(path)
 
-        print("[+]" + path + ' 创建成功')
+        print("[+]" + path + ' 文件夹创建成功')
         return True
     else:
         # 如果目录存在则不创建，并提示目录已存在
-        print("[+]" + path + ' 已存在')
+        #print("[+]" + path + ' 文件夹已存在')
         return False
 
 
@@ -120,12 +120,6 @@ if __name__ == '__main__':
     print("需要整理的文件目录:%s" %base_path)
     print("归档目录:%s" %target_path)
 
-
-    #需要整理的文件目录
-    #base_path = "V:\\备份文件\\手机文件备份\\"
-
-    #归档目录
-    #target_path = "Y:\\图片资源\\图片\\手机照片\\相册\\"
 
     time_start = time.time()
 
